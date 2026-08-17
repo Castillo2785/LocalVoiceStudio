@@ -4,7 +4,7 @@ VoiceStudio is a **local-first text-to-speech workspace** that requires no accou
 
 To apply this description on GitHub, open the repository page, select the gear icon beside **About**, paste the description above into **Description**, and save. The text is within GitHub's 350-character limit.
 
-![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard.png)
+![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard-1.png)
 
 ![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard-2.png)
 
