@@ -33,7 +33,13 @@
 - [x] Verify edge-tts voice availability for Spanish, Quechua, Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French.
 - [x] Add verified language metadata, named female/male voice presets, and defaults for the expanded voice catalog.
 - [x] Update the workspace language selector to comfortably support the expanded language list.
-- [ ] Add coverage for the expanded catalog and verify representative multilingual generation, export, and regression behavior.
-- [ ] Sync the expanded multilingual VoiceStudio project to the local Git repository and provide the next commit steps.
-- [ ] Complete one first-run Central Aymara MMS generation after the optional PyTorch model download finishes.
+- [x] Add coverage for the expanded catalog and verify representative multilingual generation, export, and regression behavior.
+- [x] Sync the expanded multilingual VoiceStudio project to the local Git repository and provide the next commit steps.
+- [x] Complete one first-run Central Aymara MMS generation after the optional PyTorch model download finishes.
 - [x] Complete one end-to-end Spanish, Japanese, Arabic, or French Edge Neural generation and verify MP3/WAV/AAC exports.
+- [x] Refresh the README overview and language support copy for the current 13-language, multi-engine release.
+- [x] Prepare a concise 0–350 character GitHub repository description that reflects the current product scope.
+- [x] Sync the documentation update to the local Git repository and provide the commit and GitHub editing steps.
+- [x] Reorder language buttons with English first, Spanish second, Mandarin third, and Cantonese fourth.
+- [x] Add language-specific default scripts and update the script editor whenever the selected language changes.
+- [ ] Add tests for language order and language-to-script mapping, then validate the updated interface and sync the local project.

@@ -23,6 +23,7 @@ import {
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import {
+  DEFAULT_SCRIPT,
   DEFAULT_VOICE,
   LANGUAGE_OPTIONS,
   STYLE_PRESETS,
@@ -115,10 +116,10 @@ function ParameterSlider({
 }
 
 export default function Home() {
-  const [script, setScript] = useState("In the first light of morning, every story can find a voice of its own.");
-  const [language, setLanguage] = useState<StudioLanguage>("mandarin");
+  const [script, setScript] = useState(DEFAULT_SCRIPT.english);
+  const [language, setLanguage] = useState<StudioLanguage>("english");
   const [gender, setGender] = useState<VoiceGender>("female");
-  const [voiceId, setVoiceId] = useState(DEFAULT_VOICE.mandarin.female);
+  const [voiceId, setVoiceId] = useState(DEFAULT_VOICE.english.female);
   const [style, setStyle] = useState<VoiceStyle>("news");
   const [rate, setRate] = useState(0.98);
   const [pitch, setPitch] = useState(0);
@@ -178,6 +179,11 @@ export default function Home() {
     setPitch(preset.pitch);
     setVolume(preset.volume);
     setPause(preset.pause);
+  };
+
+  const selectLanguage = (nextLanguage: StudioLanguage) => {
+    setLanguage(nextLanguage);
+    setScript(DEFAULT_SCRIPT[nextLanguage]);
   };
 
   const startGeneration = () => {
@@ -307,7 +313,7 @@ export default function Home() {
               <div className="border-t border-white/[0.07] bg-black/[0.12] p-5 sm:p-6">
                 <div className="mb-3 flex items-center gap-2 text-xs font-semibold text-slate-300"><Languages className="h-3.5 w-3.5 text-cyan-300" /> Language</div>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
-                  {LANGUAGE_OPTIONS.map(option => <button key={option.id} type="button" onClick={() => setLanguage(option.id)} className={`rounded-xl border px-3 py-3 text-left transition-all ${language === option.id ? "border-cyan-300/40 bg-cyan-300/[0.12] text-cyan-50 shadow-[0_0_24px_rgba(52,211,153,.05)]" : "border-white/[0.07] bg-white/[0.025] text-slate-500 hover:border-white/[0.16] hover:text-slate-300"}`}><p className="text-xs font-bold">{option.label}</p><p className="mt-1 font-mono text-[9px] opacity-55">{option.locale}</p></button>)}
+                  {LANGUAGE_OPTIONS.map(option => <button key={option.id} type="button" onClick={() => selectLanguage(option.id)} className={`rounded-xl border px-3 py-3 text-left transition-all ${language === option.id ? "border-cyan-300/40 bg-cyan-300/[0.12] text-cyan-50 shadow-[0_0_24px_rgba(52,211,153,.05)]" : "border-white/[0.07] bg-white/[0.025] text-slate-500 hover:border-white/[0.16] hover:text-slate-300"}`}><p className="text-xs font-bold">{option.label}</p><p className="mt-1 font-mono text-[9px] opacity-55">{option.locale}</p></button>)}
                 </div>
               </div>
             </section>

@@ -1,8 +1,12 @@
-# VoiceStudio
+# VoiceStudio — Local Multilingual TTS Studio
 
 VoiceStudio is a **local-first text-to-speech workspace** that requires no account or API key. It uses Edge Neural voices, eSpeak NG, and an optional MMS local model to cover Mandarin, English, Cantonese, Spanish, Quechua, Central Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French. FFmpeg exports MP3, WAV, and AAC files locally, while the workspace provides gender selection, style presets, parameter controls, browser playback, and local generation history.
 
+To apply this description on GitHub, open the repository page, select the gear icon beside **About**, paste the description above into **Description**, and save. The text is within GitHub's 350-character limit.
+
 ![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard.png)
+
+![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard-2.png)
 
 *The VoiceStudio workspace: script editing, language and voice selection, parameter controls, and local generation.*
 
@@ -36,7 +40,7 @@ VoiceStudio supports Mandarin, English, Cantonese, Spanish, Quechua, Central Aym
 
 ## Workflow
 
-Enter a script, select **Mandarin**, **English**, or **Cantonese**, and then choose **Female voice** or **Male voice**. Each language and gender combination offers named neural voice presets. Choose News Anchor, Storyteller, Calm, or Energetic, then refine Pitch, Speed / Rate, Volume, and Pause / Break with the sliders.
+Enter a script, select any of the 13 supported languages, and then choose **Female voice** or **Male voice**. The workspace automatically selects the appropriate local engine and exposes named presets where the underlying engine supports them. Choose News Anchor, Storyteller, Calm, or Energetic, then refine Pitch, Speed / Rate, Volume, and Pause / Break with the sliders.
 
 After selecting **Generate voice**, preview the render in the dark player and download it as MP3, WAV, or AAC. Generation metadata is stored in browser `localStorage` and supports replay and repeat downloads.
 
@@ -53,7 +57,7 @@ pnpm test
 pnpm check
 ```
 
-The test suite covers the language and voice catalog, style presets, request validation, and the real local edge-tts + FFmpeg MP3/WAV/AAC pipeline.
+The test suite covers the 13-language voice catalog, style presets, request validation, Edge Neural and eSpeak NG rendering, plus MP3/WAV/AAC export. A separate opt-in MMS integration test verifies the locally downloaded Central Aymara model.
 
 ## References
 

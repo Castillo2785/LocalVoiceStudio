@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_VOICE, LANGUAGE_OPTIONS, STYLE_PRESETS, VOICE_CATALOG } from "./voice";
+import { DEFAULT_SCRIPT, DEFAULT_VOICE, LANGUAGE_OPTIONS, STYLE_PRESETS, VOICE_CATALOG } from "./voice";
 
 describe("VoiceStudio voice catalog", () => {
-  it("covers every supported language with named female and male presets", () => {
-    expect(LANGUAGE_OPTIONS.map(language => language.label)).toEqual([
-      "Mandarin", "English", "Cantonese", "Spanish", "Quechua", "Aymara", "Guarani", "Japanese", "Thai", "Korean", "Hindi", "Arabic", "French",
-    ]);
+  it("prioritizes English, Spanish, Mandarin, and Cantonese in the language selector", () => {
+    expect(LANGUAGE_OPTIONS.slice(0, 4).map(language => language.id)).toEqual(["english", "spanish", "mandarin", "cantonese"]);
+  });
 
+  it("covers every supported language with named female and male presets", () => {
+    expect(LANGUAGE_OPTIONS).toHaveLength(13);
     for (const language of LANGUAGE_OPTIONS) {
       expect(VOICE_CATALOG[language.id].female.length).toBeGreaterThan(0);
       expect(VOICE_CATALOG[language.id].male.length).toBeGreaterThan(0);
@@ -14,6 +15,15 @@ describe("VoiceStudio voice catalog", () => {
       expect(VOICE_CATALOG[language.id].male.some(voice => voice.id === DEFAULT_VOICE[language.id].male)).toBe(true);
       expect(VOICE_CATALOG[language.id].female.every(voice => ["edge", "espeak", "mms"].includes(voice.engine))).toBe(true);
     }
+  });
+
+  it("maps every language to a non-empty default script", () => {
+    for (const language of LANGUAGE_OPTIONS) {
+      expect(DEFAULT_SCRIPT[language.id].trim().length).toBeGreaterThan(8);
+    }
+    expect(DEFAULT_SCRIPT.english).toContain("first light of morning");
+    expect(DEFAULT_SCRIPT.mandarin).toContain("清晨");
+    expect(DEFAULT_SCRIPT.cantonese).toContain("清晨");
   });
 
   it("assigns documented local fallback engines for low-resource languages", () => {

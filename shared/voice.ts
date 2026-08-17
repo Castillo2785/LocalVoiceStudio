@@ -26,10 +26,10 @@ export type VoicePreset = {
 };
 
 export const LANGUAGE_OPTIONS: Array<{ id: StudioLanguage; label: string; locale: string; engine: VoiceEngine }> = [
-  { id: "mandarin", label: "Mandarin", locale: "zh-CN", engine: "edge" },
   { id: "english", label: "English", locale: "en-US", engine: "edge" },
-  { id: "cantonese", label: "Cantonese", locale: "zh-HK", engine: "edge" },
   { id: "spanish", label: "Spanish", locale: "es-ES", engine: "edge" },
+  { id: "mandarin", label: "Mandarin", locale: "zh-CN", engine: "edge" },
+  { id: "cantonese", label: "Cantonese", locale: "zh-HK", engine: "edge" },
   { id: "quechua", label: "Quechua", locale: "qu", engine: "espeak" },
   { id: "aymara", label: "Aymara", locale: "ayr", engine: "mms" },
   { id: "guarani", label: "Guarani", locale: "gn", engine: "espeak" },
@@ -40,6 +40,22 @@ export const LANGUAGE_OPTIONS: Array<{ id: StudioLanguage; label: string; locale
   { id: "arabic", label: "Arabic", locale: "ar-SA", engine: "edge" },
   { id: "french", label: "French", locale: "fr-FR", engine: "edge" },
 ];
+
+export const DEFAULT_SCRIPT: Record<StudioLanguage, string> = {
+  english: "In the first light of morning, every story can find a voice of its own.",
+  spanish: "En la primera luz de la mañana, cada historia puede encontrar su propia voz.",
+  mandarin: "在清晨的第一缕光里，每个故事都能找到属于自己的声音。",
+  cantonese: "喺清晨嘅第一道光裡面，每個故事都可以搵到屬於自己嘅聲音。",
+  quechua: "Allin p'unchay. Kayqa VoiceStudio nisqa qillqasqami.",
+  aymara: "Kamisaraki. Aka qillqatax VoiceStudio uñt'ayawiwa.",
+  guarani: "Mba'éichapa. Kóva ha'e VoiceStudio ñemoñare.",
+  japanese: "朝の最初の光の中で、すべての物語は自分だけの声を見つけられます。",
+  thai: "ในแสงแรกของยามเช้า ทุกเรื่องราวสามารถค้นพบเสียงของตัวเองได้",
+  korean: "아침의 첫빛 속에서 모든 이야기는 자신만의 목소리를 찾을 수 있습니다.",
+  hindi: "सुबह की पहली रोशनी में, हर कहानी अपनी आवाज़ पा सकती है।",
+  arabic: "في أول ضوء من الصباح، يمكن لكل قصة أن تجد صوتها الخاص.",
+  french: "Dans la première lumière du matin, chaque histoire peut trouver sa propre voix.",
+};
 
 export const VOICE_CATALOG: Record<StudioLanguage, Record<VoiceGender, VoicePreset[]>> = {
   mandarin: {
