@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Local setup guide
+    url: ../../docs/OPEN_SOURCE_DEPLOYMENT_GUIDE.md
+    about: Read the installation, test, and GitHub publishing instructions before opening a setup issue.
