@@ -186,7 +186,7 @@ export default function Home() {
       toast.error("Enter text before generating speech");
       return;
     }
-    generation.mutate({ text, language, gender, voiceId, style, rate, pitch, volume, pause });
+    generation.mutate({ text, language, gender, voiceId, engine: activeVoice.engine, style, rate, pitch, volume, pause });
   };
 
   const downloadEntry = (entry: HistoryEntry, format: AudioFormat) => {
@@ -306,21 +306,21 @@ export default function Home() {
 
               <div className="border-t border-white/[0.07] bg-black/[0.12] p-5 sm:p-6">
                 <div className="mb-3 flex items-center gap-2 text-xs font-semibold text-slate-300"><Languages className="h-3.5 w-3.5 text-cyan-300" /> Language</div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
                   {LANGUAGE_OPTIONS.map(option => <button key={option.id} type="button" onClick={() => setLanguage(option.id)} className={`rounded-xl border px-3 py-3 text-left transition-all ${language === option.id ? "border-cyan-300/40 bg-cyan-300/[0.12] text-cyan-50 shadow-[0_0_24px_rgba(52,211,153,.05)]" : "border-white/[0.07] bg-white/[0.025] text-slate-500 hover:border-white/[0.16] hover:text-slate-300"}`}><p className="text-xs font-bold">{option.label}</p><p className="mt-1 font-mono text-[9px] opacity-55">{option.locale}</p></button>)}
                 </div>
               </div>
             </section>
 
             <section className="glass-panel rounded-2xl p-5 sm:p-6">
-              <div className="mb-5 flex items-center justify-between"><div><p className="text-sm font-bold text-slate-100">Voice direction</p><p className="mt-1 text-[10px] text-slate-500">{languageLabel} · named neural presets</p></div><SlidersHorizontal className="h-4 w-4 text-cyan-300" /></div>
+              <div className="mb-5 flex items-center justify-between"><div><p className="text-sm font-bold text-slate-100">Voice direction</p><p className="mt-1 text-[10px] text-slate-500">{languageLabel} · {activeVoice.engine === "edge" ? "named neural presets" : activeVoice.engine === "mms" ? "local MMS neural model" : "local eSpeak NG model"}</p></div><SlidersHorizontal className="h-4 w-4 text-cyan-300" /></div>
               <div className="mb-5 grid grid-cols-2 rounded-xl border border-white/[0.07] bg-[#0a0c11] p-1">
                 {(["female", "male"] as const).map(item => <button key={item} type="button" onClick={() => setGender(item)} className={`rounded-lg py-2.5 text-xs font-semibold transition ${gender === item ? "bg-white/[0.09] text-white shadow-sm" : "text-slate-500 hover:text-slate-300"}`}>{item === "female" ? "Female voice" : "Male voice"}</button>)}
               </div>
               <div className="space-y-2">
                 {voiceOptions.map(voice => <button type="button" key={voice.id} onClick={() => setVoiceId(voice.id)} className={`group flex w-full items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition ${voiceId === voice.id ? "border-cyan-300/35 bg-cyan-300/[0.09]" : "border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15]"}`}><div className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[11px] font-bold ${voiceId === voice.id ? "bg-cyan-200 text-slate-900" : "bg-white/[0.07] text-slate-400"}`}>{voice.name.slice(0, 1)}</div><div className="min-w-0 flex-1"><p className="text-xs font-bold text-slate-200">{voice.name}</p><p className="mt-1 truncate text-[10px] text-slate-500">{voice.role} · {voice.tone}</p></div><span className={`h-2 w-2 rounded-full ${voiceId === voice.id ? "bg-cyan-200 shadow-[0_0_8px_rgba(165,243,252,.8)]" : "bg-slate-700"}`} /></button>)}
               </div>
-              <div className="mt-5 rounded-xl border border-dashed border-white/[0.1] bg-white/[0.015] px-3.5 py-3 text-[10px] leading-5 text-slate-500">Selected: <span className="font-medium text-slate-300">{activeVoice.name}</span> · {activeVoice.tone}. The voice catalog is loaded from local edge-tts.</div>
+              <div className="mt-5 rounded-xl border border-dashed border-white/[0.1] bg-white/[0.015] px-3.5 py-3 text-[10px] leading-5 text-slate-500">Selected: <span className="font-medium text-slate-300">{activeVoice.name}</span> · {activeVoice.tone}. Engine: {activeVoice.engine === "edge" ? "Edge Neural" : activeVoice.engine === "mms" ? "Local MMS" : "Local eSpeak NG"}.</div>
             </section>
           </div>
 

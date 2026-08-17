@@ -1,53 +1,125 @@
-export type StudioLanguage = "mandarin" | "english" | "cantonese";
+export type StudioLanguage =
+  | "mandarin"
+  | "english"
+  | "cantonese"
+  | "spanish"
+  | "quechua"
+  | "aymara"
+  | "guarani"
+  | "japanese"
+  | "thai"
+  | "korean"
+  | "hindi"
+  | "arabic"
+  | "french";
+
 export type VoiceGender = "female" | "male";
 export type AudioFormat = "mp3" | "wav" | "aac";
+export type VoiceEngine = "edge" | "espeak" | "mms";
 
 export type VoicePreset = {
   id: string;
   name: string;
   role: string;
   tone: string;
+  engine: VoiceEngine;
 };
 
-export const LANGUAGE_OPTIONS: Array<{ id: StudioLanguage; label: string; locale: string }> = [
-  { id: "mandarin", label: "Mandarin", locale: "zh-CN" },
-  { id: "english", label: "English", locale: "en-US" },
-  { id: "cantonese", label: "Cantonese", locale: "zh-HK" },
+export const LANGUAGE_OPTIONS: Array<{ id: StudioLanguage; label: string; locale: string; engine: VoiceEngine }> = [
+  { id: "mandarin", label: "Mandarin", locale: "zh-CN", engine: "edge" },
+  { id: "english", label: "English", locale: "en-US", engine: "edge" },
+  { id: "cantonese", label: "Cantonese", locale: "zh-HK", engine: "edge" },
+  { id: "spanish", label: "Spanish", locale: "es-ES", engine: "edge" },
+  { id: "quechua", label: "Quechua", locale: "qu", engine: "espeak" },
+  { id: "aymara", label: "Aymara", locale: "ayr", engine: "mms" },
+  { id: "guarani", label: "Guarani", locale: "gn", engine: "espeak" },
+  { id: "japanese", label: "Japanese", locale: "ja-JP", engine: "edge" },
+  { id: "thai", label: "Thai", locale: "th-TH", engine: "edge" },
+  { id: "korean", label: "Korean", locale: "ko-KR", engine: "edge" },
+  { id: "hindi", label: "Hindi", locale: "hi-IN", engine: "edge" },
+  { id: "arabic", label: "Arabic", locale: "ar-SA", engine: "edge" },
+  { id: "french", label: "French", locale: "fr-FR", engine: "edge" },
 ];
 
 export const VOICE_CATALOG: Record<StudioLanguage, Record<VoiceGender, VoicePreset[]>> = {
   mandarin: {
     female: [
-      { id: "zh-CN-XiaoxiaoNeural", name: "Xiaoxiao", role: "News · Narrative", tone: "Warm, clear" },
-      { id: "zh-CN-XiaoyiNeural", name: "Xiaoyi", role: "Character · Story", tone: "Lively, expressive" },
-      { id: "zh-CN-liaoning-XiaobeiNeural", name: "Xiaobei", role: "Casual · Dialect", tone: "Humorous, bright" },
+      { id: "zh-CN-XiaoxiaoNeural", name: "Xiaoxiao", role: "News · Narrative", tone: "Warm, clear", engine: "edge" },
+      { id: "zh-CN-XiaoyiNeural", name: "Xiaoyi", role: "Character · Story", tone: "Lively, expressive", engine: "edge" },
+      { id: "zh-CN-liaoning-XiaobeiNeural", name: "Xiaobei", role: "Casual · Dialect", tone: "Humorous, bright", engine: "edge" },
     ],
     male: [
-      { id: "zh-CN-YunxiNeural", name: "Yunxi", role: "Story · Narration", tone: "Bright, natural" },
-      { id: "zh-CN-YunyangNeural", name: "Yunyang", role: "News · Business", tone: "Professional, reliable" },
-      { id: "zh-CN-YunjianNeural", name: "Yunjian", role: "Sport · Energy", tone: "Full, powerful" },
+      { id: "zh-CN-YunxiNeural", name: "Yunxi", role: "Story · Narration", tone: "Bright, natural", engine: "edge" },
+      { id: "zh-CN-YunyangNeural", name: "Yunyang", role: "News · Business", tone: "Professional, reliable", engine: "edge" },
+      { id: "zh-CN-YunjianNeural", name: "Yunjian", role: "Sport · Energy", tone: "Full, powerful", engine: "edge" },
     ],
   },
   english: {
     female: [
-      { id: "en-US-AriaNeural", name: "Aria", role: "News · Novel", tone: "Confident, clear" },
-      { id: "en-US-JennyNeural", name: "Jenny", role: "General · Warm", tone: "Friendly, considerate" },
-      { id: "en-US-EmmaNeural", name: "Emma", role: "Conversation", tone: "Cheerful, natural" },
+      { id: "en-US-AriaNeural", name: "Aria", role: "News · Novel", tone: "Confident, clear", engine: "edge" },
+      { id: "en-US-JennyNeural", name: "Jenny", role: "General · Warm", tone: "Friendly, considerate", engine: "edge" },
+      { id: "en-US-EmmaNeural", name: "Emma", role: "Conversation", tone: "Cheerful, natural", engine: "edge" },
     ],
     male: [
-      { id: "en-US-ChristopherNeural", name: "Christopher", role: "News · Novel", tone: "Reliable, authoritative" },
-      { id: "en-US-GuyNeural", name: "Guy", role: "News · Novel", tone: "Energetic, direct" },
-      { id: "en-US-BrianNeural", name: "Brian", role: "Conversation", tone: "Warm, authentic" },
+      { id: "en-US-ChristopherNeural", name: "Christopher", role: "News · Novel", tone: "Reliable, authoritative", engine: "edge" },
+      { id: "en-US-GuyNeural", name: "Guy", role: "News · Novel", tone: "Energetic, direct", engine: "edge" },
+      { id: "en-US-BrianNeural", name: "Brian", role: "Conversation", tone: "Warm, authentic", engine: "edge" },
     ],
   },
   cantonese: {
     female: [
-      { id: "zh-HK-HiuMaanNeural", name: "HiuMaan", role: "Cantonese · General", tone: "Friendly, natural" },
-      { id: "zh-HK-HiuGaaiNeural", name: "HiuGaai", role: "Cantonese · General", tone: "Bright, approachable" },
+      { id: "zh-HK-HiuMaanNeural", name: "HiuMaan", role: "Cantonese · General", tone: "Friendly, natural", engine: "edge" },
+      { id: "zh-HK-HiuGaaiNeural", name: "HiuGaai", role: "Cantonese · General", tone: "Bright, approachable", engine: "edge" },
     ],
     male: [
-      { id: "zh-HK-WanLungNeural", name: "WanLung", role: "Cantonese · General", tone: "Steady, composed" },
+      { id: "zh-HK-WanLungNeural", name: "WanLung", role: "Cantonese · General", tone: "Steady, composed", engine: "edge" },
     ],
+  },
+  spanish: {
+    female: [
+      { id: "es-ES-ElviraNeural", name: "Elvira", role: "Spain · General", tone: "Clear, welcoming", engine: "edge" },
+      { id: "es-MX-DaliaNeural", name: "Dalia", role: "Mexico · General", tone: "Natural, warm", engine: "edge" },
+    ],
+    male: [
+      { id: "es-ES-AlvaroNeural", name: "Alvaro", role: "Spain · General", tone: "Steady, articulate", engine: "edge" },
+      { id: "es-MX-JorgeNeural", name: "Jorge", role: "Mexico · General", tone: "Direct, confident", engine: "edge" },
+    ],
+  },
+  quechua: {
+    female: [{ id: "qu+f3", name: "Quechua F3", role: "Offline · Formant", tone: "eSpeak NG variant", engine: "espeak" }],
+    male: [{ id: "qu+m3", name: "Quechua M3", role: "Offline · Formant", tone: "eSpeak NG variant", engine: "espeak" }],
+  },
+  aymara: {
+    female: [{ id: "facebook/mms-tts-ayr", name: "Central Aymara", role: "Offline · Neural", tone: "Single-speaker MMS model", engine: "mms" }],
+    male: [{ id: "facebook/mms-tts-ayr", name: "Central Aymara", role: "Offline · Neural", tone: "Single-speaker MMS model", engine: "mms" }],
+  },
+  guarani: {
+    female: [{ id: "gn+f3", name: "Guarani F3", role: "Offline · Formant", tone: "eSpeak NG variant", engine: "espeak" }],
+    male: [{ id: "gn+m3", name: "Guarani M3", role: "Offline · Formant", tone: "eSpeak NG variant", engine: "espeak" }],
+  },
+  japanese: {
+    female: [{ id: "ja-JP-NanamiNeural", name: "Nanami", role: "Japan · General", tone: "Clear, natural", engine: "edge" }],
+    male: [{ id: "ja-JP-KeitaNeural", name: "Keita", role: "Japan · General", tone: "Steady, warm", engine: "edge" }],
+  },
+  thai: {
+    female: [{ id: "th-TH-PremwadeeNeural", name: "Premwadee", role: "Thailand · General", tone: "Friendly, composed", engine: "edge" }],
+    male: [{ id: "th-TH-NiwatNeural", name: "Niwat", role: "Thailand · General", tone: "Natural, confident", engine: "edge" }],
+  },
+  korean: {
+    female: [{ id: "ko-KR-SunHiNeural", name: "SunHi", role: "Korea · General", tone: "Bright, clear", engine: "edge" }],
+    male: [{ id: "ko-KR-InJoonNeural", name: "InJoon", role: "Korea · General", tone: "Calm, articulate", engine: "edge" }],
+  },
+  hindi: {
+    female: [{ id: "hi-IN-SwaraNeural", name: "Swara", role: "India · General", tone: "Warm, natural", engine: "edge" }],
+    male: [{ id: "hi-IN-MadhurNeural", name: "Madhur", role: "India · General", tone: "Clear, assured", engine: "edge" }],
+  },
+  arabic: {
+    female: [{ id: "ar-SA-ZariyahNeural", name: "Zariyah", role: "Saudi Arabia · General", tone: "Elegant, clear", engine: "edge" }],
+    male: [{ id: "ar-SA-HamedNeural", name: "Hamed", role: "Saudi Arabia · General", tone: "Measured, authoritative", engine: "edge" }],
+  },
+  french: {
+    female: [{ id: "fr-FR-DeniseNeural", name: "Denise", role: "France · General", tone: "Warm, articulate", engine: "edge" }],
+    male: [{ id: "fr-FR-HenriNeural", name: "Henri", role: "France · General", tone: "Refined, steady", engine: "edge" }],
   },
 };
 
@@ -60,8 +132,12 @@ export const STYLE_PRESETS = [
 
 export type VoiceStyle = (typeof STYLE_PRESETS)[number]["id"];
 
-export const DEFAULT_VOICE: Record<StudioLanguage, Record<VoiceGender, string>> = {
-  mandarin: { female: "zh-CN-XiaoxiaoNeural", male: "zh-CN-YunxiNeural" },
-  english: { female: "en-US-AriaNeural", male: "en-US-ChristopherNeural" },
-  cantonese: { female: "zh-HK-HiuMaanNeural", male: "zh-HK-WanLungNeural" },
-};
+export const DEFAULT_VOICE: Record<StudioLanguage, Record<VoiceGender, string>> = Object.fromEntries(
+  (Object.keys(VOICE_CATALOG) as StudioLanguage[]).map(language => [
+    language,
+    {
+      female: VOICE_CATALOG[language].female[0].id,
+      male: VOICE_CATALOG[language].male[0].id,
+    },
+  ]),
+) as Record<StudioLanguage, Record<VoiceGender, string>>;

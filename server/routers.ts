@@ -22,9 +22,10 @@ export const appRouter = router({
     generate: publicProcedure
       .input(z.object({
         text: z.string().min(1).max(3000),
-        language: z.enum(["mandarin", "english", "cantonese"]),
+        language: z.enum(["mandarin", "english", "cantonese", "spanish", "quechua", "aymara", "guarani", "japanese", "thai", "korean", "hindi", "arabic", "french"]),
         gender: z.enum(["female", "male"]),
         voiceId: z.string().min(3).max(120),
+        engine: z.enum(["edge", "espeak", "mms"]),
         style: z.enum(["news", "story", "calm", "energetic"]),
         rate: z.number().min(0.7).max(1.3),
         pitch: z.number().min(-12).max(12),

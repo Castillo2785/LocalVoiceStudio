@@ -16,6 +16,7 @@ describe("voice.generate", () => {
       language: "mandarin",
       gender: "female",
       voiceId: "zh-CN-XiaoxiaoNeural",
+      engine: "edge",
       style: "news",
       rate: 0.98,
       pitch: 0,

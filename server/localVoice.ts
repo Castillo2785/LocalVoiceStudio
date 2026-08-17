@@ -3,7 +3,7 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 import { nanoid } from "nanoid";
-import type { StudioLanguage, VoiceGender, VoiceStyle } from "../shared/voice";
+import type { StudioLanguage, VoiceEngine, VoiceGender, VoiceStyle } from "../shared/voice";
 
 const LOCAL_DATA_DIR = path.join(process.cwd(), "local-data");
 const AUDIO_DIR = path.join(LOCAL_DATA_DIR, "audio");
@@ -15,6 +15,7 @@ export type LocalVoiceRequest = {
   language: StudioLanguage;
   gender: VoiceGender;
   voiceId: string;
+  engine: VoiceEngine;
   style: VoiceStyle;
   rate: number;
   pitch: number;
@@ -37,20 +38,12 @@ function run(command: string, args: string[], cwd = process.cwd()): Promise<Proc
     const child = spawn(command, args, { cwd, shell: false, windowsHide: true });
     let stdout = "";
     let stderr = "";
-
-    child.stdout.on("data", data => {
-      stdout += data.toString();
-    });
-    child.stderr.on("data", data => {
-      stderr += data.toString();
-    });
+    child.stdout.on("data", data => { stdout += data.toString(); });
+    child.stderr.on("data", data => { stderr += data.toString(); });
     child.on("error", error => reject(error));
     child.on("close", code => {
-      if (code === 0) {
-        resolve({ stdout, stderr });
-      } else {
-        reject(new Error(`${command} exited with code ${code}: ${stderr || stdout}`));
-      }
+      if (code === 0) resolve({ stdout, stderr });
+      else reject(new Error(`${command} exited with code ${code}: ${stderr || stdout}`));
     });
   });
 }
@@ -63,7 +56,6 @@ function findPython() {
     "python3",
     "python",
   ].filter((candidate): candidate is string => Boolean(candidate));
-
   return candidates.find(candidate => candidate === "python3" || candidate === "python" || existsSync(candidate)) ?? "python3";
 }
 
@@ -71,17 +63,20 @@ function getFfmpeg() {
   return process.env.VOICE_STUDIO_FFMPEG || "ffmpeg";
 }
 
+function getEspeak() {
+  return process.env.VOICE_STUDIO_ESPEAK || "espeak-ng";
+}
+
+function getMmsScript() {
+  return path.join(process.cwd(), "scripts", "mms_tts.py");
+}
+
 function splitScript(text: string) {
   const chunks = text.match(/[^。！？.!?]+[。！？.!?]?/g)?.map(item => item.trim()).filter(Boolean) ?? [text];
   const result: string[] = [];
   for (const chunk of chunks) {
-    if (chunk.length <= 900) {
-      result.push(chunk);
-      continue;
-    }
-    for (let start = 0; start < chunk.length; start += 900) {
-      result.push(chunk.slice(start, start + 900));
-    }
+    if (chunk.length <= 900) result.push(chunk);
+    else for (let start = 0; start < chunk.length; start += 900) result.push(chunk.slice(start, start + 900));
   }
   return result;
 }
@@ -99,25 +94,13 @@ function withExplicitSign(value: number, suffix: string) {
   return `${value >= 0 ? "+" : ""}${value}${suffix}`;
 }
 
-async function synthesizeSegment(input: LocalVoiceRequest, segment: string, outputPath: string) {
+async function synthesizeEdgeSegment(input: LocalVoiceRequest, segment: string, outputPath: string) {
   const python = findPython();
   const ratePercent = withExplicitSign(Math.round((input.rate - 1) * 100), "%");
   const volumePercent = withExplicitSign(Math.round(input.volume - 100), "%");
   const pitchHz = withExplicitSign(Math.round(input.pitch), "Hz");
   try {
-    await run(python, [
-      "-m",
-      "edge_tts",
-      "--voice",
-      input.voiceId,
-      `--rate=${ratePercent}`,
-      `--volume=${volumePercent}`,
-      `--pitch=${pitchHz}`,
-      "--text",
-      segment,
-      "--write-media",
-      outputPath,
-    ]);
+    await run(python, ["-m", "edge_tts", "--voice", input.voiceId, `--rate=${ratePercent}`, `--volume=${volumePercent}`, `--pitch=${pitchHz}`, "--text", segment, "--write-media", outputPath]);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     if (message.includes("No module named edge_tts") || message.includes("ENOENT")) {
@@ -125,6 +108,46 @@ async function synthesizeSegment(input: LocalVoiceRequest, segment: string, outp
     }
     throw new Error(`edge-tts generation failed. Check your network connection and voice ID. ${message.slice(0, 180)}`);
   }
+}
+
+async function synthesizeEspeakSegment(input: LocalVoiceRequest, segment: string, outputPath: string) {
+  const rawWav = outputPath.replace(/\.mp3$/, ".espeak.wav");
+  const rate = Math.round(175 * input.rate);
+  const pitch = Math.max(0, Math.min(99, Math.round(50 + input.pitch * 4)));
+  const amplitude = Math.max(0, Math.min(200, Math.round(input.volume * 1.7)));
+  try {
+    await run(getEspeak(), ["-v", input.voiceId, "-s", String(rate), "-p", String(pitch), "-a", String(amplitude), "-w", rawWav, segment]);
+    await run(getFfmpeg(), ["-y", "-i", rawWav, "-c:a", "libmp3lame", "-b:a", "64k", outputPath]);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (message.includes("ENOENT")) throw new Error("eSpeak NG was not found. On macOS, run: brew install espeak-ng");
+    throw new Error(`eSpeak NG generation failed. Check the local voice installation. ${message.slice(0, 180)}`);
+  } finally {
+    await rm(rawWav, { force: true });
+  }
+}
+
+async function synthesizeMmsSegment(input: LocalVoiceRequest, segment: string, outputPath: string) {
+  const python = findPython();
+  const rawWav = outputPath.replace(/\.mp3$/, ".mms.wav");
+  try {
+    await run(python, [getMmsScript(), "--model", input.voiceId, "--text", segment, "--output", rawWav, "--rate", input.rate.toFixed(2)]);
+    await run(getFfmpeg(), ["-y", "-i", rawWav, "-filter:a", `volume=${(input.volume / 100).toFixed(2)}`, "-c:a", "libmp3lame", "-b:a", "64k", outputPath]);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (message.includes("No module named") || message.includes("ENOENT")) {
+      throw new Error("The local MMS engine is not ready. Run: pnpm voice:setup:extended");
+    }
+    throw new Error(`MMS generation failed. The first run downloads the selected model and may take a moment. ${message.slice(0, 180)}`);
+  } finally {
+    await rm(rawWav, { force: true });
+  }
+}
+
+async function synthesizeSegment(input: LocalVoiceRequest, segment: string, outputPath: string) {
+  if (input.engine === "espeak") return synthesizeEspeakSegment(input, segment, outputPath);
+  if (input.engine === "mms") return synthesizeMmsSegment(input, segment, outputPath);
+  return synthesizeEdgeSegment(input, segment, outputPath);
 }
 
 export async function generateLocalVoice(input: LocalVoiceRequest) {
@@ -141,7 +164,6 @@ export async function generateLocalVoice(input: LocalVoiceRequest) {
   const mp3Path = path.join(AUDIO_DIR, mp3File);
   const wavPath = path.join(AUDIO_DIR, wavFile);
   const aacPath = path.join(AUDIO_DIR, aacFile);
-
   await mkdir(taskDir, { recursive: true });
 
   try {
@@ -153,24 +175,10 @@ export async function generateLocalVoice(input: LocalVoiceRequest) {
       const segmentFile = path.join(taskDir, `speech-${index}.mp3`);
       await synthesizeSegment(input, segment, segmentFile);
       sourceFiles.push(segmentFile);
-
       if (input.pause > 0 && index < segments.length - 1) {
         const pauseFile = path.join(taskDir, `pause-${index}.mp3`);
         try {
-          await run(getFfmpeg(), [
-            "-y",
-            "-f",
-            "lavfi",
-            "-t",
-            input.pause.toFixed(2),
-            "-i",
-            "anullsrc=channel_layout=mono:sample_rate=24000",
-            "-c:a",
-            "libmp3lame",
-            "-b:a",
-            "48k",
-            pauseFile,
-          ]);
+          await run(getFfmpeg(), ["-y", "-f", "lavfi", "-t", input.pause.toFixed(2), "-i", "anullsrc=channel_layout=mono:sample_rate=24000", "-c:a", "libmp3lame", "-b:a", "48k", pauseFile]);
         } catch {
           throw new Error("FFmpeg was not found. Install FFmpeg before generating pauses or multi-format exports.");
         }
@@ -199,11 +207,7 @@ export async function generateLocalVoice(input: LocalVoiceRequest) {
       id,
       duration: durationEstimate(text, input.rate, input.pause, segments.length),
       audioUrl: `/local-audio/${mp3File}`,
-      downloads: {
-        mp3: `/local-audio/${mp3File}`,
-        wav: `/local-audio/${wavFile}`,
-        aac: `/local-audio/${aacFile}`,
-      },
+      downloads: { mp3: `/local-audio/${mp3File}`, wav: `/local-audio/${wavFile}`, aac: `/local-audio/${aacFile}` },
     };
   } finally {
     await rm(taskDir, { recursive: true, force: true });

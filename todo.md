@@ -24,7 +24,16 @@
 - [x] Capture a professional VoiceStudio UI screenshot and save it as a repository asset for GitHub README rendering.
 - [x] Add a UI screenshot and caption near the top of the README and verify its relative path.
 - [x] Sync the README screenshot asset and documentation update to the local open-source project and provide the Git commit command.
-- [ ] Convert README files, project documentation, descriptions, and code comments to English.
-- [ ] Run tests and type checks to confirm that the English rewrite does not affect application behavior.
-- [ ] Clear the existing local Git history and create a clean initial commit with an English message.
-
+- [x] Convert README files, project documentation, descriptions, and code comments to English.
+- [x] Run tests and type checks to confirm that the English rewrite does not affect application behavior.
+- [x] Clear the existing local Git history and create a clean initial commit with an English message.
+- [x] Inspect the current local and remote Git history before rewriting the repository as a single initial commit.
+- [x] Recreate the local repository with one clean initial commit and preserve the configured remote URL.
+- [x] Replace the GitHub main branch history with the new initial commit and verify the remote branch contains one commit.
+- [x] Verify edge-tts voice availability for Spanish, Quechua, Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French.
+- [x] Add verified language metadata, named female/male voice presets, and defaults for the expanded voice catalog.
+- [x] Update the workspace language selector to comfortably support the expanded language list.
+- [ ] Add coverage for the expanded catalog and verify representative multilingual generation, export, and regression behavior.
+- [ ] Sync the expanded multilingual VoiceStudio project to the local Git repository and provide the next commit steps.
+- [ ] Complete one first-run Central Aymara MMS generation after the optional PyTorch model download finishes.
+- [x] Complete one end-to-end Spanish, Japanese, Arabic, or French Edge Neural generation and verify MP3/WAV/AAC exports.

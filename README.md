@@ -1,6 +1,6 @@
 # VoiceStudio
 
-VoiceStudio is a **local-first text-to-speech workspace** that requires no account or API key. It uses the open-source `edge-tts` Python wrapper to access Microsoft Edge online voices and uses FFmpeg locally to export MP3, WAV, and AAC files. The app includes named Mandarin, English, and Cantonese voice presets, gender selection, four performance styles, pitch/rate/volume/pause controls, browser playback, and local generation history.
+VoiceStudio is a **local-first text-to-speech workspace** that requires no account or API key. It uses Edge Neural voices, eSpeak NG, and an optional MMS local model to cover Mandarin, English, Cantonese, Spanish, Quechua, Central Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French. FFmpeg exports MP3, WAV, and AAC files locally, while the workspace provides gender selection, style presets, parameter controls, browser playback, and local generation history.
 
 ![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard.png)
 
@@ -15,6 +15,8 @@ VoiceStudio is a **local-first text-to-speech workspace** that requires no accou
 | Node.js 22+ | Runs the React app and local server | Install if not already available |
 | Python 3.9+ | Runs `edge-tts` | Install if not already available |
 | FFmpeg | Creates silence segments and exports WAV/AAC | `brew install ffmpeg` |
+| eSpeak NG (optional) | Offline Quechua and Guarani rendering | `brew install espeak-ng` |
+| MMS Python stack (optional) | Local Central Aymara neural rendering | `pnpm voice:setup:extended` |
 
 ## Quick start
 
@@ -27,6 +29,10 @@ pnpm dev
 ```
 
 The terminal will print a local address, usually `http://localhost:3000`. On the first render, edge-tts retrieves audio online and stores generated files in `local-data/audio/`; this directory is ignored by Git.
+
+## Languages
+
+VoiceStudio supports Mandarin, English, Cantonese, Spanish, Quechua, Central Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French. Most languages use Edge Neural voices. Quechua and Guarani require `brew install espeak-ng`; Central Aymara requires `pnpm voice:setup:extended` and downloads its local model on first use. Read the [multilingual support guide](docs/multilingual-support.md) for the engine matrix and the Aymara model's non-commercial license limitation.
 
 ## Workflow
 
@@ -55,6 +61,7 @@ The test suite covers the language and voice catalog, style presets, request val
 - [FFmpeg](https://ffmpeg.org/)
 - [Local TTS decision](docs/local-tts-decision.md)
 - [Local architecture](docs/local-architecture.md)
+- [Multilingual support](docs/multilingual-support.md)
 - [Open-source deployment and GitHub publishing guide](docs/OPEN_SOURCE_DEPLOYMENT_GUIDE.md)
 
 ## Open-source collaboration

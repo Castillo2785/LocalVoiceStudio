@@ -1,0 +1,4 @@
+-r requirements.txt
+torch>=2.2
+transformers>=4.33,<5.0
+numpy>=1.26

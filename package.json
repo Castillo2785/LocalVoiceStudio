@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "voice:setup": "python3 -m venv .venv && .venv/bin/pip install -r requirements.txt",
+    "voice:setup:extended": "python3 -m venv .venv && .venv/bin/pip install -r requirements-extended.txt",
     "db:push": "drizzle-kit generate && drizzle-kit migrate"
   },
   "dependencies": {

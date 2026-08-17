@@ -24,3 +24,5 @@ Pull requests should clearly explain the change, verification method, and possib
 ## Voice use boundaries
 
 Contributors must not use VoiceStudio to enable impersonation, fraud, or unauthorized voice cloning. The default edge-tts integration relies on an online voice service and must not be described as fully offline or production-SLA-backed.
+
+The optional Central Aymara MMS model is licensed CC-BY-NC 4.0. Contributions must preserve the non-commercial license note in the multilingual support guide and must not misrepresent that checkpoint as commercially licensed.

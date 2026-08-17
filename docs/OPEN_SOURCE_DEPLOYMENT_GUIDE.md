@@ -39,7 +39,9 @@ pnpm check
 pnpm dev
 ```
 
-After startup, open the address printed in the terminal, usually [http://localhost:3000](http://localhost:3000). Enter a short script, select a Mandarin, English, or Cantonese voice, and choose **Generate voice**. The app writes MP3, WAV, and AAC files under `local-data/audio/`; that directory is already listed in `.gitignore` and must not be committed.
+After startup, open the address printed in the terminal, usually [http://localhost:3000](http://localhost:3000). Enter a short script, select any available language and voice, and choose **Generate voice**. The app writes MP3, WAV, and AAC files under `local-data/audio/`; that directory is already listed in `.gitignore` and must not be committed.
+
+For the full language catalog, install `espeak-ng` with `brew install espeak-ng`. Central Aymara additionally requires `pnpm voice:setup:extended`; the first render downloads a local MMS model. See the [multilingual support guide](multilingual-support.md) for engine and license details.
 
 ## 3. Local troubleshooting
 
