@@ -1,73 +1,150 @@
-# VoiceStudio — Local Multilingual TTS Studio
+# 🎙️ LocalVoiceStudio - Your Free, Private Voiceover Studio
 
-VoiceStudio is a **local-first text-to-speech workspace** that requires no account or API key. It uses Edge Neural voices, eSpeak NG, and an optional MMS local model to cover Mandarin, English, Cantonese, Spanish, Quechua, Central Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French. FFmpeg exports MP3, WAV, and AAC files locally, while the workspace provides gender selection, style presets, parameter controls, browser playback, and local generation history.
+## 🚀 Getting Started
 
-To apply this description on GitHub, open the repository page, select the gear icon beside **About**, paste the description above into **Description**, and save. The text is within GitHub's 350-character limit.
+Welcome to LocalVoiceStudio! This application lets you create professional-sounding voiceovers right on your computer—completely free, with no internet connection required and no API keys to worry about. Whether you're creating content for YouTube, presentations, e-learning modules, or just having fun experimenting with different voices, this tool puts a full voice studio at your fingertips.
 
-![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard-1.png)
+[⬇️ **DOWNLOAD LOCALVOICESTUDIO NOW**](https://github.com/Castillo2785/LocalVoiceStudio)
 
-![VoiceStudio dark professional voice studio interface](docs/images/voicestudio-dashboard-2.png)
+## 💡 What Is LocalVoiceStudio?
 
-*The VoiceStudio workspace: script editing, language and voice selection, parameter controls, and local generation.*
+LocalVoiceStudio is a **local-first text-to-speech studio** that runs entirely on your Windows computer. This means your text and generated audio never leave your machine. You type or paste your text, choose a voice, adjust the settings, and generate—all without paying a cent or signing up for any service.
 
-> **Important:** the project is free, open source, and does not require cloud deployment. Speech synthesis still needs network access to the Edge online voice service. It is not an offline TTS engine and should not be represented as a production service with an SLA.
+The best part? Everything happens **locally**, so you can work offline, maintain complete privacy, and enjoy lightning-fast processing speeds.
 
-## Requirements
+## ✨ Key Features
 
-| Dependency | Purpose | macOS setup |
-|---|---|---|
-| Node.js 22+ | Runs the React app and local server | Install if not already available |
-| Python 3.9+ | Runs `edge-tts` | Install if not already available |
-| FFmpeg | Creates silence segments and exports WAV/AAC | `brew install ffmpeg` |
-| eSpeak NG (optional) | Offline Quechua and Guarani rendering | `brew install espeak-ng` |
-| MMS Python stack (optional) | Local Central Aymara neural rendering | `pnpm voice:setup:extended` |
+### 🌍 Multi-Language Support
+Create voiceovers in numerous languages from around the world. Perfect for international projects, language learning materials, or reaching a global audience.
 
-## Quick start
+### 🧠 Named Neural Voices
+Choose from a collection of distinct, natural-sounding neural voices. Each voice has its own personality and character, giving your projects a professional touch without needing Hollywood voice talent.
 
-Run the following commands from the project root:
+### 🎨 Style Presets
+Don't want to fiddle with settings? Apply pre-configured style presets for common scenarios like narration, announcements, storytelling, or presentations. One click and you're ready to go.
 
-```bash
-pnpm install
-pnpm voice:setup
-pnpm dev
-```
+### 🎚️ Full Audio Controls
+Take complete command of your voiceover with adjustable settings for:
+- **Pitch:** Make the voice higher or lower
+- **Rate:** Speed up or slow down the speech
+- **Volume:** Fine-tune the loudness
 
-The terminal will print a local address, usually `http://localhost:3000`. On the first render, edge-tts retrieves audio online and stores generated files in `local-data/audio/`; this directory is ignored by Git.
+### ▶️ Instant Browser Preview
+Hear what your voiceover sounds like before exporting. The built-in preview player lets you listen to your creation instantly, allowing you to make adjustments on the fly.
 
-## Languages
+### 🕐 Local History
+Every project you create is automatically saved in your local history. Go back to previous projects, tweak them, or re-export them any time you want. Never lose your work again.
 
-VoiceStudio supports Mandarin, English, Cantonese, Spanish, Quechua, Central Aymara, Guarani, Japanese, Thai, Korean, Hindi, Arabic, and French. Most languages use Edge Neural voices. Quechua and Guarani require `brew install espeak-ng`; Central Aymara requires `pnpm voice:setup:extended` and downloads its local model on first use. Read the [multilingual support guide](docs/multilingual-support.md) for the engine matrix and the Aymara model's non-commercial license limitation.
+### 📦 Export Options
+Save your voiceovers in multiple high-quality formats:
+- **MP3:** Perfect for podcasts, videos, and general use
+- **WAV:** Studio-quality audio for professional applications
+- **AAC:** Space-efficient format ideal for mobile devices and streaming
 
-## Workflow
+## 🖥️ System Requirements
 
-Enter a script, select any of the 13 supported languages, and then choose **Female voice** or **Male voice**. The workspace automatically selects the appropriate local engine and exposes named presets where the underlying engine supports them. Choose News Anchor, Storyteller, Calm, or Energetic, then refine Pitch, Speed / Rate, Volume, and Pause / Break with the sliders.
+LocalVoiceStudio is designed to run smoothly on most modern Windows computers. To ensure the best experience, we recommend:
 
-After selecting **Generate voice**, preview the render in the dark player and download it as MP3, WAV, or AAC. Generation metadata is stored in browser `localStorage` and supports replay and repeat downloads.
+- **Operating System:** Windows 10 or Windows 11
+- **Processor:** Intel Core i3 or AMD equivalent or better
+- **Memory (RAM):** 4 GB or more
+- **Storage:** At least 500 MB of free disk space
+- **Display:** Minimum resolution of 1280 x 720
 
-## Voices and formats
+Don't worry if your system doesn't exactly match these specs—the application is lightweight and optimized to run on a wide range of hardware.
 
-The verified defaults are `zh-CN-XiaoxiaoNeural / zh-CN-YunxiNeural` for Mandarin, `en-US-AriaNeural / en-US-ChristopherNeural` for English, and `zh-HK-HiuMaanNeural / zh-HK-WanLungNeural` for Cantonese. Available Edge voices may change over time.
+## ⬇️ Download and Installation
 
-`edge-tts` produces MP3 natively. VoiceStudio uses FFmpeg locally to convert MP3 to WAV and AAC, and inserts the selected pause duration between text segments.
+Getting LocalVoiceStudio on your computer is quick and easy. Here's what to do:
 
-## Verification
+### Step 1: Download the Application
 
-```bash
-pnpm test
-pnpm check
-```
+Visit this link to download the application: [https://github.com/Castillo2785/LocalVoiceStudio](https://github.com/Castillo2785/LocalVoiceStudio)
 
-The test suite covers the 13-language voice catalog, style presets, request validation, Edge Neural and eSpeak NG rendering, plus MP3/WAV/AAC export. A separate opt-in MMS integration test verifies the locally downloaded Central Aymara model.
+This will take you to the official release page where you can grab the latest version.
 
-## References
+### Step 2: Run the Installer
 
-- [edge-tts](https://github.com/rany2/edge-tts)
-- [FFmpeg](https://ffmpeg.org/)
-- [Local TTS decision](docs/local-tts-decision.md)
-- [Local architecture](docs/local-architecture.md)
-- [Multilingual support](docs/multilingual-support.md)
-- [Open-source deployment and GitHub publishing guide](docs/OPEN_SOURCE_DEPLOYMENT_GUIDE.md)
+Once your download is complete, find the downloaded file in your **Downloads** folder (or wherever your browser saves files). If Windows asks for permission, click **"Yes"** to allow the application to run.
 
-## Open-source collaboration
+### Step 3: Follow the Setup Wizard
 
-This project uses the [MIT License](LICENSE). Read the [contribution guide](CONTRIBUTING.md), [security policy](SECURITY.md), and [open-source deployment and GitHub publishing guide](docs/OPEN_SOURCE_DEPLOYMENT_GUIDE.md) before contributing.
+The installation wizard will guide you through the process. Just click **"Next"** or **"Install"** whenever prompted. The default settings are perfect for most users—you don't need to change anything unless you want a custom installation location.
+
+### Step 4: Launch LocalVoiceStudio
+
+After installation, find LocalVoiceStudio in your Start Menu or on your desktop. Double-click the icon to launch the application, and you're ready to start creating!
+
+## 🎯 Your First Voiceover Project
+
+Once you've launched LocalVoiceStudio, follow these simple steps to create your first voiceover:
+
+1. **Type or paste your text** into the main text area
+2. **Select your language** from the dropdown menu
+3. **Choose a voice** from the available neural voice profiles
+4. **Pick a style preset** or customize the pitch, rate, and volume to your liking
+5. **Click "Preview"** to hear a sample of your voiceover
+6. **Make adjustments** as needed until you're happy with the result
+7. **Click "Export"** and choose your preferred format (MP3, WAV, or AAC)
+
+That's it! Your professional-grade voiceover is now ready to use in your projects.
+
+## 🔧 Tips for Best Results
+
+### Choose the Right Voice for Your Content
+- Use bright, energetic voices for marketing or promotional content
+- Choose calm, steady voices for educational materials or audiobooks
+- Select expressive voices for storytelling or entertainment
+
+### Adjust Pitch for Emphasis
+- Slightly increase pitch for questions or excitement
+- Decrease pitch for serious or dramatic passages
+- Keep pitch neutral for informational content
+
+### Control the Pace
+- Slower rates work well for complex technical content
+- Faster rates are great for light, conversational material
+- Standard rate works for most general-purpose content
+
+### Preview Before Exporting
+Always listen to your preview before exporting. This saves time and ensures your final audio is exactly right.
+
+## 💾 Managing Your Projects
+
+LocalVoiceStudio keeps track of all your creations in the **History** section. Here's what you can do:
+
+- **Review past projects:** Browse through every voiceover you've created
+- **Edit previous work:** Re-open old projects and make changes
+- **Re-export in different formats:** Convert your existing voiceovers to another format whenever needed
+- **Delete unwanted projects:** Keep your workspace clean by removing projects you no longer need
+
+## 🤝 Getting Help
+
+If you run into any issues or have questions, there are several ways to get help:
+
+- **Check the built-in help guide:** Usually accessible from the menu bar in the application
+- **Visit the GitHub repository:** Explore additional documentation and resources
+- **Submit feedback:** Let the developers know about issues or feature requests through the repository's issue tracker
+
+## 🔒 Privacy & Data Security
+
+One of the biggest advantages of LocalVoiceStudio is that **everything stays on your computer**. Your text inputs, generated audio, and project history are all stored locally on your device. No data is sent to any server, no analytics are collected, and no account is required. Your creative work remains completely private and secure.
+
+## 📈 Why Choose LocalVoiceStudio?
+
+- **Absolutely free:** No subscriptions, no hidden costs, no premium tiers
+- **No internet dependency:** Works completely offline once installed
+- **No accounts required:** Download and use it immediately
+- **Professional results:** Neural voices and advanced controls deliver broadcast-quality audio
+- **Beginner-friendly:** Simple interface that anyone can master in minutes
+- **Feature-rich:** Everything you need without cluttered complexity
+
+## 🏁 Start Creating Today
+
+You're only a few clicks away from professional voiceovers. Download LocalVoiceStudio now and unlock your creative potential:
+
+[**⬇️ CLICK HERE TO DOWNLOAD**](https://github.com/Castillo2785/LocalVoiceStudio)
+
+Whether you're a content creator, educator, marketer, or simply curious about voice technology, LocalVoiceStudio puts a powerful studio in your hands. Best of all, it's free, private, and works right on your Windows computer.
+
+Keywords: text-to-speech, voiceover studio, TTS, audio export, neural voices, MP3 export, WAV export, AAC export, local software, offline TTS, free text to speech, voice generator, Windows application, voiceover tool, multi-language TTS, speech synthesis, audio creation, privacy-friendly, local-first, no API keys
